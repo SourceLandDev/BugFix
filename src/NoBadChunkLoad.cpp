@@ -1,3 +1,6 @@
+// From yhzx233/FixChunkLeak
+// Licensed by Unlicense
+
 #include <ll/api/memory/Hook.h>
 #include <ll/api/memory/Memory.h>
 #include <ll/api/service/Bedrock.h>
