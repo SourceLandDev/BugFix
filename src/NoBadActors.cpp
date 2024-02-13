@@ -17,7 +17,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 }
 
 #include <mc/world/level/block/Block.h>
-#include <mc/world/level/block/utils/BedrockBlocks.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadFallingBlockMinecartHook,
