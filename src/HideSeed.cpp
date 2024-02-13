@@ -6,6 +6,6 @@ LL_AUTO_INSTANCE_HOOK(
     "?write@StartGamePacket@@UEBAXAEAVBinaryStream@@@Z",
     void
 ) {
-    *((int64*)(this + 48)) = 0;
+    ll::memory::dAccess<int64>(this, 48) = 0;
     origin();
 }

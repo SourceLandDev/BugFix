@@ -13,7 +13,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     BlockPos const& pos
 ) {
     origin(region, pos);
-    if (getTypeName() == VanillaBlockTypeIds::SnifferEgg) {
+    if (getTypeName() == VanillaBlockTypeIds::SnifferEgg.getString()) {
         region.removeFromRandomTickingQueue(pos, *this);
     }
 }

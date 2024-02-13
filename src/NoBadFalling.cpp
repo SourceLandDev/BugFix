@@ -1,5 +1,4 @@
 #include <ll/api/memory/Hook.h>
-#include <mc/deps/core/string/HashedString.h>
 #include <mc/world/actor/Actor.h>
 #include <mc/world/level/BlockSource.h>
 #include <mc/world/level/block/Block.h>
@@ -17,12 +16,15 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     if (!origin(entity)) {
         return false;
     }
+
     Vec3 const&        pos         = entity.getPosition();
     BlockSource const& blockSource = entity.getDimensionBlockSourceConst();
     Block const&       block       = blockSource.getBlock(pos);
-    if (block.getTypeName() == VanillaBlockTypeIds::Water ||
-        block.getTypeName() == VanillaBlockTypeIds::BigDripleaf) {
+    std::string        blockType   = block.getTypeName();
+    if (blockType == VanillaBlockTypeIds::Water.getString()
+        || blockType == VanillaBlockTypeIds::BigDripleaf.getString()) {
         return false;
     }
+
     return true;
 }

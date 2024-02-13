@@ -35,7 +35,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 }
 
 #include <mc/world/level/block/actor/MovingBlockActor.h>
-#include <mc/world/level/block/utils/VanillaBlockTypeIds.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadMovingBlockHook,
@@ -52,7 +51,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     origin(region);
 }
 
-#include <mc/events/NpcComponent.h>
 #include <mc/world/actor/npc/Npc.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(

@@ -1,6 +1,4 @@
 #include <ll/api/memory/Hook.h>
-#include <mc/world/item/BucketItem.h>
-#include <mc/world/item/VanillaItemNames.h>
 #include <mc/world/item/VanillaItemTags.h>
 #include <mc/world/item/registry/ItemStack.h>
 #include <mc/world/level/block/Block.h>
