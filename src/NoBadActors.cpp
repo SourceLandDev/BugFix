@@ -26,11 +26,10 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     bool,
     Actor& entity
 ) {
-    bool result = origin(entity);
     if (!isFallingBlock()) {
         entity.remove();
         return false;
     }
 
-    return result;
+    return origin(entity);
 }
