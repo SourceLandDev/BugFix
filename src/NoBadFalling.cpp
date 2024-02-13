@@ -20,7 +20,8 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     Vec3 const&        pos         = entity.getPosition();
     BlockSource const& blockSource = entity.getDimensionBlockSourceConst();
     Block const&       block       = blockSource.getBlock(pos);
-    if (block == VanillaBlockTypeIds::Water || block == VanillaBlockTypeIds::BigDripleaf) {
+    if (block.getTypeName() == VanillaBlockTypeIds::Water ||
+        block.getTypeName() == VanillaBlockTypeIds::BigDripleaf) {
         return false;
     }
     return true;
