@@ -14,7 +14,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadChunkLoadHook,
     ll::memory::HookPriority::Normal,
     ServerPlayer,
-    "?disconnect@ServerPlayer@@QEAAXXZ",
+    &ServerPlayer::disconnect,
     void
 ) {
     origin();

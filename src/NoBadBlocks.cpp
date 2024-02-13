@@ -7,7 +7,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadSnifferEggSpeedHook,
     ll::memory::HookPriority::Normal,
     Block,
-    "?onRemove@Block@@QEBAXAEAVBlockSource@@AEBVBlockPos@@@Z",
+    &Block::onRemove,
     void,
     BlockSource&    region,
     BlockPos const& pos

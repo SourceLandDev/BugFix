@@ -8,7 +8,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadExperienceOrbsHook,
     ll::memory::HookPriority::Normal,
     ServerNetworkHandler,
-    "?handle@ServerNetworkHandler@@UEAAXAEBVNetworkIdentifier@@AEBVSpawnExperienceOrbPacket@@@Z",
+    &ServerNetworkHandler::handle,
     void,
     NetworkIdentifier const&        source,
     SpawnExperienceOrbPacket const& packet

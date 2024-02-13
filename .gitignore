@@ -557,5 +557,4 @@ fabric.properties
 # Project specific ignores
 /.idea/
 /.vscode/
-/bin/
-/vsxmake2022
+/vs2022

@@ -22,7 +22,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadFallingBlockHook,
     ll::memory::HookPriority::Normal,
     Block,
-    "?shouldStopFalling@Block@@QEBA_NAEAVActor@@@Z",
+    &Block::shouldStopFalling,
     bool,
     Actor& entity
 ) {
