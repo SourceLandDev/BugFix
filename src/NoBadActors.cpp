@@ -16,24 +16,21 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     return result;
 }
 
-#include <mc/world/actor/projectile/FallingBlockActor.h>
 #include <mc/world/level/block/Block.h>
 #include <mc/world/level/block/utils/BedrockBlocks.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadFallingBlockMinecartHook,
     ll::memory::HookPriority::Normal,
-    FallingBlockActor,
-    "??0FallingBlockActor@@QEAA@PEAVActorDefinitionGroup@@AEBUActorDefinitionIdentifier@@AEAVEntityContext@@@Z",
-    FallingBlockActor*,
-    ActorDefinitionGroup*            definitions,
-    ActorDefinitionIdentifier const& definitionName,
-    EntityContext&                   entityContext
+    Block,
+    "?shouldStopFalling@Block@@QEBA_NAEAVActor@@@Z",
+    bool,
+    Actor& entity
 ) {
-    FallingBlockActor* result = origin(definitions, definitionName, entityContext);
-    Block const&       block  = result->getFallingBlock();
-    if (!block.isFallingBlock()) {
-        result->setFallingBlock(*BedrockBlocks::mAir, result + 1232);
+    bool result = origin(entity);
+    if (!isFallingBlock()) {
+        entity.remove();
+        return false;
     }
 
     return result;
