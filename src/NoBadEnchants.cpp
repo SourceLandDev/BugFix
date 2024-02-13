@@ -22,20 +22,23 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     }
 
     ListTag* ench = nbt->getList("ench");
-    for (int i = 0; i < ench->size(); ++i) {
-        CompoundTag* tag = ench->getCompound(i);
-        short        lvl = tag->getShort("lvl");
-        if (lvl > 0 && lvl < 6) {
-            continue;
-        }
-
-        ench->erase(i);
-        --i;
-    }
-
     if (ench->size() <= 0) {
         nbt->remove("ench");
         return result;
+    }
+
+    for (int i = 0; i < ench->size(); ++i) {
+        CompoundTag* tag = ench->getCompound(i);
+        short        lvl = tag->getShort("lvl");
+        if (lvl < 1) {
+            tag->putShort("lvl", 1);
+            continue;
+        }
+
+        if (lvl > 5) {
+            tag->putShort("lvl", 5);
+            continue;
+        }
     }
 
     if (result->getEnchantSlot() || result->getEnchantValue()) {

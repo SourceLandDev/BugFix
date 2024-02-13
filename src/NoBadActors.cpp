@@ -19,7 +19,7 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 #include <mc/world/level/block/Block.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
-    NoBadFallingBlockMinecartHook,
+    NoBadFallingBlockHook,
     ll::memory::HookPriority::Normal,
     Block,
     "?shouldStopFalling@Block@@QEBA_NAEAVActor@@@Z",
@@ -32,4 +32,35 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     }
 
     return origin(entity);
+}
+
+#include <mc/world/level/block/actor/MovingBlockActor.h>
+#include <mc/world/level/block/utils/VanillaBlockTypeIds.h>
+
+LL_AUTO_TYPE_INSTANCE_HOOK(
+    NoBadMovingBlockHook,
+    ll::memory::HookPriority::Normal,
+    MovingBlockActor,
+    "?tick@MovingBlockActor@@UEAAXAEAVBlockSource@@@Z",
+    void,
+    BlockSource& region
+) {
+    if (!isMovable(region)) {
+        return;
+    }
+
+    origin(region);
+}
+
+#include <mc/events/NpcComponent.h>
+#include <mc/world/actor/npc/Npc.h>
+
+LL_AUTO_TYPE_INSTANCE_HOOK(
+    NoBadNPCHook,
+    ll::memory::HookPriority::Normal,
+    Npc,
+    "?newServerAiStep@Npc@@UEAAXXZ",
+    void
+) {
+    remove();
 }
