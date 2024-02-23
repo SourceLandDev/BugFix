@@ -2,6 +2,8 @@
 #include <mc/world/item/VanillaItemTags.h>
 #include <mc/world/item/registry/ItemStack.h>
 #include <mc/world/level/block/Block.h>
+#include <mc/world/level/block/utils/VanillaBlockTypeIds.h>
+#include <mc/nbt/CompoundTag.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadItemsHook,
@@ -26,7 +28,15 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     }
 
     Block const* block = result->getBlock();
-    if (!block || !(block->isUnbreakable())) {
+    if (!block) {
+        return result;
+    }
+
+    if (block->getTypeName() == VanillaBlockTypeIds::DecoratedPot.getString() && result->hasUserData()) {
+        result->setUserData(nullptr);
+    }
+
+    if (!(block->isUnbreakable())) {
         return result;
     }
 
