@@ -32,10 +32,6 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
         return result;
     }
 
-    if (block->getTypeName() == VanillaBlockTypeIds::DecoratedPot.getString() && result->hasUserData()) {
-        result->setUserData(nullptr);
-    }
-
     if (!(block->isUnbreakable())) {
         return result;
     }
