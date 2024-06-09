@@ -62,3 +62,22 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 ) {
     remove();
 }
+
+#include <mc/world/actor/Mob.h>
+
+LL_AUTO_TYPE_INSTANCE_HOOK(
+    NoBadDeadHook,
+    ll::memory::HookPriority::Normal,
+    Mob,
+    "??0Mob@@QEAA@PEAVActorDefinitionGroup@@AEBUActorDefinitionIdentifier@@AEAVEntityContext@@@Z",
+    Mob*,
+    ActorDefinitionGroup*            definitions,
+    ActorDefinitionIdentifier const& definitionName,
+    EntityContext&                   entityContext
+) {
+    Mob* reault = origin(definitions, definitionName, entityContext);
+    if (!reault->isAlive()) {
+        reault->remove();
+    }
+    return reault;
+}
