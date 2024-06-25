@@ -49,10 +49,10 @@ LL_AUTO_TYPE_INSTANCE_HOOK(GetLastHurtHook, ll::memory::HookPriority::Normal, Ac
 }
 
 LL_AUTO_TYPE_INSTANCE_HOOK(GetSelectedItemHook, ll::memory::HookPriority::Normal, Player, &Player::getSelectedItem, ItemStack const&) {
-    auto result = ItemStack::EMPTY_ITEM;
-    if (lastPlayer != this) {
-        result = origin();
+    if (lastPlayer == this) {
+        lastPlayer = nullptr;
+        return ItemStack::EMPTY_ITEM;
     }
     lastPlayer = nullptr;
-    return result;
+    return origin();
 }
