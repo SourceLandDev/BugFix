@@ -1,24 +1,9 @@
 #include <ll/api/memory/Hook.h>
 #include <mc/entity/components/ProjectileComponent.h>
+#include <mc/world/actor/ActorDamageSource.h>
 #include <mc/world/actor/Mob.h>
 #include <mc/world/actor/player/Player.h>
 #include <vector>
-
-bool hited = false;
-
-LL_AUTO_TYPE_INSTANCE_HOOK(
-    ProjectileHitHook,
-    ll::memory::HookPriority::Normal,
-    ProjectileComponent,
-    &ProjectileComponent::onHit,
-    void,
-    Actor&           a2,
-    HitResult const& a3
-) {
-    hited = true;
-    origin(a2, a3);
-    hited = false;
-}
 
 std::vector<Actor*> actors{};
 
@@ -30,10 +15,11 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     void,
     ActorDamageSource const& a2
 ) {
-    if (hited) {
-        actors.push_back(this);
-    }
     origin(a2);
+    if (a2.getEntityType() != ActorType::Player || a2.getEntityType() == a2.getDamagingEntityType()) {
+        return;
+    }
+    actors.push_back(this);
 }
 
 Player* lastPlayer = nullptr;
@@ -41,10 +27,11 @@ Player* lastPlayer = nullptr;
 LL_AUTO_TYPE_INSTANCE_HOOK(GetLastHurtHook, ll::memory::HookPriority::Normal, Actor, &Actor::getLastHurtByPlayer, Player*) {
     auto result = origin();
     auto index  = std::find(actors.begin(), actors.end(), this);
-    if (index != actors.end()) {
-        lastPlayer = result;
-        actors.erase(index);
+    if (index == actors.end()) {
+        return result;
     }
+    lastPlayer = result;
+    actors.erase(index);
     return result;
 }
 
