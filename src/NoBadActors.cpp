@@ -76,8 +76,9 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     EntityContext&                   entityContext
 ) {
     Mob* reault = origin(definitions, definitionName, entityContext);
-    if (!reault->isAlive()) {
-        reault->remove();
+    if (reault->isDead()) {
+        reault->setDead(false);
+        reault->kill();
     }
     return reault;
 }
