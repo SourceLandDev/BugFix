@@ -68,17 +68,18 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadDeadHook,
     ll::memory::HookPriority::Normal,
-    Mob,
-    "??0Mob@@QEAA@PEAVActorDefinitionGroup@@AEBUActorDefinitionIdentifier@@AEAVEntityContext@@@Z",
-    Mob*,
-    ActorDefinitionGroup*            definitions,
-    ActorDefinitionIdentifier const& definitionName,
-    EntityContext&                   entityContext
+    Actor,
+    &Actor::hurt,
+    bool,
+    class ActorDamageSource const& source,
+    float                          damage,
+    bool                           knock,
+    bool                           ignite
 ) {
-    Mob* reault = origin(definitions, definitionName, entityContext);
-    if (reault->isDead()) {
-        reault->setDead(false);
-        reault->kill();
+    bool reault = origin(source, damage, knock, ignite);
+    if (!reault && isDead()) {
+        setDead(false);
+        return origin(source, damage, knock, ignite);
     }
     return reault;
 }
