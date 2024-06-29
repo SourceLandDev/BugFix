@@ -53,33 +53,42 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
 
 #include <mc/world/actor/npc/Npc.h>
 
-LL_AUTO_TYPE_INSTANCE_HOOK(
-    NoBadNPCHook,
-    ll::memory::HookPriority::Normal,
-    Npc,
-    "?newServerAiStep@Npc@@UEAAXXZ",
-    void
-) {
+LL_AUTO_TYPE_INSTANCE_HOOK(NoBadNPCHook, ll::memory::HookPriority::Normal, Npc, "?newServerAiStep@Npc@@UEAAXXZ", void) {
     remove();
 }
 
-#include <mc/world/actor/Mob.h>
+LL_AUTO_TYPE_INSTANCE_HOOK(
+    NoBadDeadOnHurtHook,
+    ll::memory::HookPriority::Normal,
+    Actor,
+    &Actor::hurt,
+    bool,
+    ActorDamageSource const& source,
+    float                    damage,
+    bool                     knock,
+    bool                     ignite
+) {
+    bool result = origin(source, damage, knock, ignite);
+    if (!result && isDead() && getHealth() > 0) {
+        setDead(false);
+        return origin(source, damage, knock, ignite);
+    }
+    return result;
+}
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadDeadHook,
     ll::memory::HookPriority::Normal,
     Actor,
-    &Actor::hurt,
-    bool,
-    class ActorDamageSource const& source,
-    float                          damage,
-    bool                           knock,
-    bool                           ignite
+    "??0Actor@@QEAA@PEAVActorDefinitionGroup@@AEBUActorDefinitionIdentifier@@AEAVEntityContext@@@Z",
+    Actor*,
+    ActorDefinitionGroup*            definitions,
+    ActorDefinitionIdentifier const& definitionName,
+    EntityContext&                   entityContext
 ) {
-    bool reault = origin(source, damage, knock, ignite);
-    if (!reault && isDead()) {
-        setDead(false);
-        return origin(source, damage, knock, ignite);
+    Actor* result = origin(definitions, definitionName, entityContext);
+    if (result->isDead()) {
+        result->remove();
     }
-    return reault;
+    return result;
 }

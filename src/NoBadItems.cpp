@@ -1,9 +1,9 @@
 #include <ll/api/memory/Hook.h>
+#include <mc/nbt/CompoundTag.h>
 #include <mc/world/item/VanillaItemTags.h>
 #include <mc/world/item/registry/ItemStack.h>
 #include <mc/world/level/block/Block.h>
 #include <mc/world/level/block/utils/VanillaBlockTypeIds.h>
-#include <mc/nbt/CompoundTag.h>
 
 LL_AUTO_TYPE_INSTANCE_HOOK(
     NoBadItemsHook,
