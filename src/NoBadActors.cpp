@@ -92,3 +92,21 @@ LL_AUTO_TYPE_INSTANCE_HOOK(
     }
     return result;
 }
+
+#include <mc/world/effect/InfestedMobEffect.h>
+
+LL_AUTO_TYPE_INSTANCE_HOOK(
+    NoBadInfestedHook,
+    ll::memory::HookPriority::Normal,
+    InfestedMobEffect,
+    "?onActorHurt@InfestedMobEffect@@UEBAXAEAVActor@@HAEBVActorDamageSource@@M@Z",
+    void,
+    Actor& target,
+    int    durationTicks,
+    int    amplification
+) {
+    if (target.isType(ActorType::Allay)) {
+        return;
+    }
+    origin(target, durationTicks, amplification);
+}
